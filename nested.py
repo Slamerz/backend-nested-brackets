@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-Module docstring: One line description of what your program does.
-"""
-__author__ = "Your Github Username"
+"""Receives an input file, and evaluates if each line is currently using valid brackets, and if not the length of the
+line split at where it is invalid. """
+__author__ = "slamerz"
 
 import sys
 import re
 
 
 def main(args):
-    f = open("input.txt", 'r').read()
+    check_file("input.txt")
+    print("Jobs Done")
+
+
+def check_file(file_name):
+    f = open(file_name, 'r').read()
     results = []
     for line in f.split('\n'):
         # creates a list of only (* *) ( ) [ ] < > { } from the file
@@ -28,10 +32,7 @@ def main(args):
             p_length = len(re.findall(r"\(\*|\*\)", err))
             r = "NO " + str(len(err) - p_length)
         results.append(r)
-    new_f = open("output.txt", "w+")
-    for l in results:
-        new_f.write(str(l)+"\n")
-    print("Jobs Done")
+    write_output(results)
 
 
 def is_valid(brackets):
@@ -47,6 +48,12 @@ def is_valid(brackets):
         elif current_brackets.pop() != brackets_dict[bracket]:
             return [False, index]
     return [not current_brackets, None]
+
+
+def write_output(results_list):
+    new_f = open("output.txt", "w+")
+    for l in results_list:
+        new_f.write(str(l) + "\n")
 
 
 # (  )
